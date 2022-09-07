@@ -5,3 +5,4 @@ Test To Do app from DigitalOcean to test a fucntional React Frontend with a Djan
 
 ### Fixes
 - Problem with axios and relative paths
+- Permission denied when interacting from localhost:8000
