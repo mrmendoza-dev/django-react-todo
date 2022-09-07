@@ -19,7 +19,7 @@ export default function Todo() {
 
     function refreshList() {
       axios
-        .get("/api/todos/")
+        .get("http://localhost:8000/api/todos/")
         .then((res) => setTodoList(res.data))
         .catch((err) => console.log(err));
     }
@@ -32,14 +32,20 @@ export default function Todo() {
       toggle();
 
       if (item.id) {
-        axios.put(`/api/todos/${item.id}/`, item).then((res) => refreshList());
+        axios
+          .put(`http://localhost:8000/api/todos/${item.id}/`, item)
+          .then((res) => refreshList());
         return;
       }
-      axios.post("/api/todos/", item).then((res) => refreshList());
+      axios
+        .post("http://localhost:8000/api/todos/", item)
+        .then((res) => refreshList());
     }
 
     function handleDelete(item) {
-      axios.delete(`/api/todos/${item.id}/`).then((res) => refreshList());
+      axios
+        .delete(`http://localhost:8000/api/todos/${item.id}/`)
+        .then((res) => refreshList());
     }
 
     function createItem() {
