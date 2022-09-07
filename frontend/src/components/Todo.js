@@ -120,7 +120,7 @@ export default function Todo() {
     <>
         <main className="container">
         <h1 className="text-white text-uppercase text-center my-4">
-            Todo app
+            To-Do List
         </h1>
         <div className="row">
             <div className="col-md-6 col-sm-10 mx-auto p-0">
