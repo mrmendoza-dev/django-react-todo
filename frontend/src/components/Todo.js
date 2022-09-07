@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import axios from "axios";
 
-
 export default function Todo() {
     const [viewCompleted, setViewCompleted] = useState(false);
     const [todoList, setTodoList] = useState([]);
@@ -13,13 +12,16 @@ export default function Todo() {
       completed: false,
     });
 
+    const url = "http://localhost:8000";
+
+
     useEffect(() => {
       refreshList();
     }, []);
 
     function refreshList() {
       axios
-        .get("http://localhost:8000/api/todos/")
+        .get("/api/todos/")
         .then((res) => setTodoList(res.data))
         .catch((err) => console.log(err));
     }
@@ -33,19 +35,15 @@ export default function Todo() {
 
       if (item.id) {
         axios
-          .put(`http://localhost:8000/api/todos/${item.id}/`, item)
+          .put(`${url}/api/todos/${item.id}/`, item)
           .then((res) => refreshList());
         return;
       }
-      axios
-        .post("http://localhost:8000/api/todos/", item)
-        .then((res) => refreshList());
+      axios.post(`${url}/api/todos/`, item).then((res) => refreshList());
     }
 
     function handleDelete(item) {
-      axios
-        .delete(`http://localhost:8000/api/todos/${item.id}/`)
-        .then((res) => refreshList());
+      axios.delete(`${url}/${item.id}/`).then((res) => refreshList());
     }
 
     function createItem() {
