@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import Modal from "./components/Modal";
+import Modal from "../src/components/Modal";
 import axios from "axios";
 
 

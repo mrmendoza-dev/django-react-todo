@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { Component } from "react";
 import {
   Button,
   Modal,
@@ -11,25 +11,31 @@ import {
   Label,
 } from "reactstrap";
 
-export default function CustomModal(props) {
-
-  const [activeItem, setActiveItem] = useState(props.activeItem);
-  const { toggle, onSave } = props;
-
-
-function handleChange(e) {
-  let { name, value } = e.target;
-  if (e.target.type === "checkbox") {
-    value = e.target.checked;
+export default class CustomModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: this.props.activeItem,
+    };
   }
 
-  setActiveItem({ ...activeItem, [name]: value });
-}
+  handleChange = (e) => {
+    let { name, value } = e.target;
 
+    if (e.target.type === "checkbox") {
+      value = e.target.checked;
+    }
 
-return (
-    <>
-    <Modal isOpen={true} toggle={toggle}>
+    const activeItem = { ...this.state.activeItem, [name]: value };
+
+    this.setState({ activeItem });
+  };
+
+  render() {
+    const { toggle, onSave } = this.props;
+
+    return (
+      <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}>Todo Item</ModalHeader>
         <ModalBody>
           <Form>
@@ -39,8 +45,8 @@ return (
                 type="text"
                 id="todo-title"
                 name="title"
-                value={activeItem.title}
-                onChange={handleChange}
+                value={this.state.activeItem.title}
+                onChange={this.handleChange}
                 placeholder="Enter Todo Title"
               />
             </FormGroup>
@@ -50,8 +56,8 @@ return (
                 type="text"
                 id="todo-description"
                 name="description"
-                value={activeItem.description}
-                onChange={handleChange}
+                value={this.state.activeItem.description}
+                onChange={this.handleChange}
                 placeholder="Enter Todo description"
               />
             </FormGroup>
@@ -60,8 +66,8 @@ return (
                 <Input
                   type="checkbox"
                   name="completed"
-                  checked={activeItem.completed}
-                  onChange={handleChange}
+                  checked={this.state.activeItem.completed}
+                  onChange={this.handleChange}
                 />
                 Completed
               </Label>
@@ -69,12 +75,11 @@ return (
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => onSave(activeItem)}>
+          <Button color="success" onClick={() => onSave(this.state.activeItem)}>
             Save
           </Button>
         </ModalFooter>
       </Modal>
-    </>
-)
-
+    );
+  }
 }
